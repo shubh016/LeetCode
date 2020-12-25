@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int roman(char a)
+    {
+        if(a=='I')
+            return 1;
+        if(a=='V')
+            return 5;
+        if(a=='X')
+            return 10;
+        if(a=='L')
+            return 50;
+        if(a=='C')
+            return 100;
+        if(a=='D')
+            return 500;
+        else
+            return 1000;
+    }
+    
+    int romanToInt(string s) {
+        int res=0,last=0,seclast=0;
+        for(int i=s.size()-1;i>=0;i--)
+        {
+            last=roman(s[i]);
+            if(i!=0)
+                seclast=roman(s[i-1]);
+            res+=last;
+            if(seclast<last)
+            {
+                res-=seclast;
+                i--;
+            }    
+            
+            seclast=0;
+            last=0;
+        }
+        return res;
+    }
+};
