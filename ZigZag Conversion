@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        int n=s.size();
+        bool down=true;
+        if(numRows<2)
+            return s;
+        int row=0;
+        vector<string> v(numRows);
+        for(int i=0;i<n;i++)
+        {
+            v[row].push_back(s[i]);
+            if(row==numRows-1)
+                down=false;
+            if(row==0)
+                down=true;
+            if(down)
+                row++;
+            if(!down)
+                row--;
+        }
+        string str="";
+        for(int i=0;i<numRows;i++)
+            str+=v[i];
+        return str;
+    }
+};
