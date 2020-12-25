@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int,vector<int>> mp;
+        for(int i=0;i<nums.size();i++)
+            mp[nums[i]].push_back(i);
+        int i=0,j=nums.size()-1;
+        sort(nums.begin(),nums.end());
+        while(i<j)
+        {
+            //int sum=;
+            if((nums[i]+nums[j]) > target)
+                j--;
+            else if((nums[i]+nums[j]) < target)
+                i++;
+            else
+                break;
+        }
+        vector<int> v;
+        vector<bool> check(nums.size(),false);
+        for(auto k : mp[nums[i]])
+        {
+            if(!check[k])
+                v.push_back(k);
+            check[k]=true;
+        }
+        for(auto k : mp[nums[j]])
+        {
+            if(!check[k])
+                v.push_back(k);
+            check[k]=true;
+        }
+        return v;
+    }
+};
