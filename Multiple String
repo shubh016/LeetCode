@@ -1,0 +1,34 @@
+class Solution {
+public:
+    string multiply(string num1, string num2) {
+        if(num1=="0" || num2=="0")
+            return "0";
+        int m=num1.size();
+        int n=num2.size();
+        vector<int> v(m+n,0);
+        for(int i=n-1;i>=0;i--)
+            for(int j=m-1;j>=0;j--)
+                v[i+j+1]+=(num1[j]-'0')*(num2[i]-'0');
+        for(int i=v.size()-1;i>0;i--)
+        {
+           if(v[i]>=10)
+           {
+               v[i-1]+=v[i]/10;
+               v[i]=v[i]%10;
+           }
+        } 
+        string str="";
+        bool zero=false;
+        for(int i=0;i<v.size();i++)
+        {
+            if(v[i]==0 && !zero)
+                continue;
+            else
+            {
+                zero=true;
+                str+=v[i]+'0';
+            }
+        }
+        return str;
+    }
+};
