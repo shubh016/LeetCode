@@ -1,0 +1,37 @@
+class Solution {
+public:
+    
+    void find(set<vector<int>> &s,vector<int> v,vector<int>& candidates,int target,int index)
+    {
+        if(target==0)
+        {
+            sort(v.begin(),v.end());
+            s.insert(v);
+            return;
+        }
+        if(target<0)
+            return;
+        for(int i=index;i<candidates.size();i++)
+        {
+            if(candidates[i]<=target)
+            {
+                v.push_back(candidates[i]);
+                find(s,v,candidates,target-candidates[i],index);
+                v.pop_back();
+            }
+            else
+                break;
+        }
+    }
+    
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> ans;
+        vector<int> v;
+        set<vector<int>> s;
+        sort(candidates.begin(),candidates.end());
+        find(s,v,candidates,target,0);
+        for(auto i : s)
+            ans.push_back(i);
+        return ans;
+    }
+};
