@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int find(vector<int> &nums,int low,int high,int target)
+    {
+        if(low>high)
+            return -1;
+        int mid=low+(high-low)/2;
+        if(nums[mid]==target)
+            return mid;
+        if(nums[low]<=nums[mid])
+        {
+            if(target <= nums[mid] && target >= nums[low])
+                return find(nums,low,mid-1,target);
+            return find(nums,mid+1,high,target);
+        }
+        if(nums[mid]<=nums[high])
+            if(target <= nums[high] && target >= nums[mid])
+                return find(nums,mid+1,high,target);
+            return find(nums,low,mid-1,target);
+    }
+    
+    int search(vector<int>& nums, int target) {
+        int n=nums.size();
+        int ans=find(nums,0,n-1,target);
+        return ans;
+    }
+};
