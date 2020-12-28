@@ -1,0 +1,32 @@
+class Solution {
+public:
+    
+    double positive(double x, int n)
+    {
+        if(n==0)
+            return 1;
+        double power=myPow(x,n/2);
+        if(n%2==0)
+            return power*power;
+        else
+            return x*power*power;
+    }
+    
+    double negative(double x,int n)
+    {
+        if(n==-1)
+            return 1/x;
+        double power=myPow(x,n/2);
+        if(n%2==0)
+            return power*power;
+        else
+            return 1/x*power*power;
+    }
+    
+    double myPow(double x, int n) {
+       if(n>=0)
+           return positive(x,n);
+        else
+            return negative(x,n);
+    }
+};
