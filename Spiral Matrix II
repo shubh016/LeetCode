@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> v(n,vector<int>(n));
+        int rows=0,rowe=n-1,cols=0,cole=n-1;
+        int count=1;
+        while(rows<=rowe && cols<=cole){
+            for(int i=cols;i<=cole;i++) v[rows][i]=count++;
+            rows++;
+            for(int i=rows;i<=rowe;i++) v[i][cole]=count++;
+            cole--;
+            if(cole>=cols){
+                for(int i=cole;i>=cols;i--) v[rowe][i]=count++;
+                rowe--;
+            }
+            if(rowe>=rows){
+                for(int i=rowe;i>=rows;i--) v[i][cols]=count++;
+                cols++;
+            }
+        }
+        return v;
+    }
+};
