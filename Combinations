@@ -1,0 +1,29 @@
+class Solution {
+public:
+    void find(set<vector<int>> &s,vector<int> nums,vector<int> &v1,int k,int row){
+        if(v1.size()==k){
+            s.insert(v1);
+            return;
+        }
+        for(int i=row;i<nums.size();i++){
+                v1.push_back(nums[i]);
+                find(s,nums,v1,k,i+1);
+                v1.pop_back();
+            }
+    }
+    
+    
+    vector<vector<int>> combine(int n, int k) {
+        set<vector<int>> s;
+        vector<vector<int>> v;
+        vector<int> nums(n);
+        for(int i=1;i<=n;i++){
+            nums[i-1]=i;
+        }
+        vector<int> v1;
+        find(s,nums,v1,k,0);
+        for(auto i : s)
+            v.push_back(i);
+        return v;
+    }
+};
