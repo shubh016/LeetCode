@@ -1,0 +1,79 @@
+//Failing for larger test Cases
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    
+    bool palindrome(vector<int> &v){
+        int i=0,j=v.size()-1;
+        while(i<j){
+            if(v[i]!=v[j])
+                return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+    
+    void findd(vector<int> &v,vector<int> &v1,vector<bool> &visit,int &count, bool &flag){
+        if(v1.size()==v.size()){
+            if(palindrome(v1)){
+                count++;
+                flag=true;
+                return;   
+            }
+        }
+        for(int i=0;i<v.size() && !flag;i++){
+            if(!visit[i]){
+                v1.push_back(v[i]);
+                visit[i]=true;
+                findd(v,v1,visit,count,flag);
+                v1.pop_back();
+                visit[i]=false;
+            }
+        }
+    }
+    
+    void permutations(vector<int> &v,int &count){
+        vector<int> v1;
+        int n=v.size();
+        bool flag=false;
+        vector<bool> visit(n,false);
+        findd(v,v1,visit,count,flag);
+    }
+    
+    void paths(TreeNode* root,vector<vector<int>> &v,vector<int> &v1,int &count){
+        if(!root){
+            return;
+        }
+        v1.push_back(root->val);
+        if(!root->left && !root->right){
+            permutations(v1,count);
+            v1.pop_back();
+            return;
+        }
+        if(root->left)
+            paths(root->left,v,v1,count);
+        if(root->right)
+            paths(root->right,v,v1,count);
+        v1.pop_back();
+    }
+    
+    int pseudoPalindromicPaths (TreeNode* root) {
+        vector<int> v1;
+        vector<vector<int>> v;
+        int count=0;
+        paths(root,v,v1,count);
+        return count;
+    }
+};
