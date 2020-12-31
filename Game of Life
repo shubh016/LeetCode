@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int x[8]={-1,-1,0,1,1,1,0,-1};
+    int y[8]={0,1,1,1,0,-1,-1,-1};
+    void fill(queue<pair<int,pair<int,int>>> &q,int m,int n,int i,int j,vector<vector<int>>& v){
+        int count=0;
+        for(int k=0;k<8;k++){
+            if(i+x[k]<0 || i+x[k]>=m || j+y[k]<0 || j+y[k]>=n)
+                continue;
+            if(v[i+x[k]][j+y[k]]==1)
+                count++;
+        }
+        if(v[i][j]==1 && count < 2 || count > 3)
+            q.push({0,{i,j}});
+        else if(v[i][j]==0 && count==3)
+            q.push({1,{i,j}});
+    }
+    
+    void gameOfLife(vector<vector<int>>& board) {
+        queue<pair<int,pair<int,int>>> q;
+        int m=board.size(),n=board[0].size();
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                fill(q,m,n,i,j,board);
+            }
+        }
+        while(!q.empty()){
+            int i=q.front().second.first;
+            int j=q.front().second.second;
+            int value=q.front().first;
+            q.pop();
+            board[i][j]=value;
+        }
+    }
+};
