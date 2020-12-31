@@ -1,0 +1,40 @@
+class Solution {
+public:
+    void histogram(vector<int> &v,int &maxarea){
+        stack<int> s;
+        v.push_back(0);
+        for(int i=0;i<v.size();i++){
+            if(s.empty() || v[s.top()] <= v[i])
+                s.push(i);
+            else{
+                int j=s.top();
+                s.pop();
+                maxarea=max(maxarea,v[j]*(s.empty() ? i : i-s.top()-1));
+                i--;
+            }
+        }
+    }
+    
+    int maximalRectangle(vector<vector<char>>& M) {
+        int maxarea=0;
+        if(M.empty())
+            return 0;
+        int m=M.size(),n=M[0].size();
+        vector<vector<int>> matrix(m,vector<int>(n,0));
+        for(int i=0;i<n;i++){
+            if(M[0][i]=='1'){
+                matrix[0][i]=1;
+            }
+        }
+        for(int i=1;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(M[i][j]=='1'){
+                    matrix[i][j]=1+matrix[i-1][j];
+                }
+            }
+        }
+        for(int i=0;i<m;i++)
+            histogram(matrix[i],maxarea);
+        return maxarea;
+    }
+};
