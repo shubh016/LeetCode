@@ -1,0 +1,56 @@
+class Solution {
+public:
+    int search(vector<int> &arr,int target){
+        /*
+        int low=0,high=arr.size();
+        int mid=low+(high-low)/2;
+        while(low<=high){
+            mid=low+(high-low)/2;
+            if(arr[mid]==target)
+                return mid;
+            else if(arr[mid] > target)
+                high=mid-1;
+            else
+                low=mid+1;
+        }
+        return -1;
+        */
+        for(int i=0;i<arr.size();i++){
+            if(arr[i]==target)
+                return i;
+        }
+        return -1;
+    }
+    
+    bool canFormArray(vector<int>& arr, vector<vector<int>>& pieces) {
+        int n=arr.size();
+        bool last=false;
+        int m=pieces.size();
+        if(m==0)
+            return false;
+        if(m==1){
+            for(int i=0;i<n;i++){
+                if(arr[i]!=pieces[0][i]){
+                    return false;
+                }
+            }
+        }
+        else{
+            int index;
+            //sort(arr.begin(),arr.end());
+            for(int i=m-1;i>=0;i--){
+                bool flag=true;
+                for(int j=0;j<pieces[i].size();j++){
+                    if(flag){
+                        index=search(arr,pieces[i][j]);
+                        flag=false;
+                    }
+                    if(index>=n || index==-1 || arr[index]!=pieces[i][j])
+                        return false;
+                    index++;
+                }
+            }
+        }
+        return true;
+    }
+};
