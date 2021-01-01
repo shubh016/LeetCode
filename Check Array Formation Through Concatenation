@@ -1,20 +1,6 @@
 class Solution {
 public:
     int search(vector<int> &arr,int target){
-        /*
-        int low=0,high=arr.size();
-        int mid=low+(high-low)/2;
-        while(low<=high){
-            mid=low+(high-low)/2;
-            if(arr[mid]==target)
-                return mid;
-            else if(arr[mid] > target)
-                high=mid-1;
-            else
-                low=mid+1;
-        }
-        return -1;
-        */
         for(int i=0;i<arr.size();i++){
             if(arr[i]==target)
                 return i;
