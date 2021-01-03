@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void arrangement(vector<bool> &v,vector<int> &v1,int n,int &count,int j){
+        if(v1.size()==n){
+            count++;
+            return;
+        }
+        for(int i=1;i<=n;i++){
+            if(!v[i] && ((i%j)==0 || (j%i)==0)){
+                v1.push_back(i);
+                v[i]=true;
+                arrangement(v,v1,n,count,j+1);
+                v[i]=false;
+                v1.pop_back();
+            }
+        }
+    }
+    
+    int countArrangement(int n) {
+        vector<bool> v(n+1,false);
+        vector<int> v1;
+        int count=0;
+        arrangement(v,v1,n,count,1);
+        return count;
+    }
+};
