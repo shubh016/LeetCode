@@ -1,0 +1,45 @@
+class Solution {
+public:
+    void fill(stack<int> &s,string value){
+        int ans=0,sign=1;
+        for(int i=0;i<value.size();i++){
+            if(value[i]=='-' && value.size()>1)
+                sign=-1;
+            else
+                ans=ans*10+(value[i]-'0');
+        }
+        int a,b;
+        if(value=="+" || value=="-" || value== "/" || value=="*"){ 
+            if(!s.empty()){
+                a=s.top();
+                s.pop();   
+            }
+            if(!s.empty()){
+                b=s.top();
+                s.pop();
+            }
+            if(value=="+"){
+                ans=b+a;
+            }
+            else if(value=="-"){
+                ans=b-a;
+            } 
+            else if(value=="/"){
+                ans=b/a;
+            }
+            else{
+                ans=b*a;
+            }
+        }
+        ans*=sign;
+        s.push(ans);
+    }
+    
+    int evalRPN(vector<string>& tokens) {
+        stack<int> s;
+        for(int i=0;i<tokens.size();i++){
+            fill(s,tokens[i]);
+        }
+        return s.top();
+    }
+};
