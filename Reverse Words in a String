@@ -1,0 +1,42 @@
+class Solution {
+public:
+    void fill(string &str,stack<char> &st){
+        while(!st.empty()){
+            str+=st.top();
+            st.pop();
+        }
+    }
+    
+    string reverseWords(string s) {
+        string str="";
+        stack<char> st;
+        int n=s.size();
+        int j=n-1,i=0;
+        bool once=false;
+        while(s[i]==' '){
+            i++;   
+        }
+        while(s[j]==' '){
+            j--;
+        }
+        while(j>=i){
+            if(once && s[j]==' '){
+                j--;
+                continue;
+            }
+            if(s[j]==' '){
+                once=true;
+                fill(str,st);
+                str+=" ";
+            }
+            else{
+                st.push(s[j]);
+                if(once)
+                    once=false;
+            }
+            j--;
+        }
+        fill(str,st);
+        return str;
+    }
+};
