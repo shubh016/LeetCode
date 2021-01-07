@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int minCut(string s) {
+        int n=s.size();
+        vector<vector<bool>> dp(n,vector<bool>(n,false));
+        for(int k=0;k<n;k++){
+            for(int i=0,j=k;j<n;i++,j++){
+                if(k==0)
+                    dp[i][j]=true;
+                else if(k==1)
+                    dp[i][j]=(s[i]==s[j]);
+                else{
+                    if(s[i]==s[j] && dp[i+1][j-1])
+                        dp[i][j]=true;
+                    else
+                        dp[i][j]=false;
+                }
+            }    
+        }
+        vector<int> value(n);
+        value[0]=0;
+        for(int i=1;i<n;i++){
+            int mini=INT_MAX;
+            if(dp[0][i]){
+                value[i]=0;
+                continue;
+            }
+            for(int j=i;j>=1;j--){
+                if(dp[j][i]){
+                    if(mini > value[j-1])
+                        mini=value[j-1];
+                }
+            }
+            value[i]=mini+1;
+        }
+        return value[n-1];
+    }
+};
