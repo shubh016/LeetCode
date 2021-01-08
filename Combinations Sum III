@@ -1,0 +1,30 @@
+class Solution {
+public:
+    void summ(int &sum,set<vector<int>> &s,vector<int> &v,int k,int n,int row){
+        if(v.size()==k && sum==n){
+            s.insert(v);
+            return;
+        }
+        for(int i=row;i<10;i++){
+            sum+=i;
+            if(sum<=n){
+                v.push_back(i);
+                summ(sum,s,v,k,n,i+1);
+                v.pop_back();
+            }
+            sum-=i;
+        }
+    }
+    
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> v;
+        vector<int> v1;
+        set<vector<int>> s;
+        int sum=0;
+        summ(sum,s,v1,k,n,1);
+        for(auto i : s){
+            v.push_back(i);
+        }
+        return v;
+    }
+};
