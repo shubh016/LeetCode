@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int totalMoney(int n) {
+        int extra=n%7;
+        int weeks=(n-extra)/7;
+        int ans=0;
+        int perweek=28;
+        int value=(extra*weeks);
+        while(weeks){
+            ans+=perweek;
+            weeks--;
+            perweek+=7;
+        }
+        for(int i=1;i<=extra;i++){
+            ans+=i;
+        }
+        return ans+value;
+    }
+};
