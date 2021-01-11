@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int rob_utils(vector<int> &nums,int index,vector<int> &dp,int n){
+        if(index>=n){
+            return 0;
+        }
+        if(dp[index]!=-1){
+            return dp[index];
+        }
+        return dp[index]=max((nums[index]+rob_utils(nums,index+2,dp,n)),(rob_utils(nums,index+1,dp,n)));
+    }
+    
+    
+    int rob(vector<int>& nums) {
+        int n=nums.size();
+        if(n==1)
+            return nums[0];
+        vector<int> dp(n,-1);
+        vector<int> dp1(n,-1);
+        return max(rob_utils(nums,0,dp,n-1),rob_utils(nums,1,dp1,n));
+    }
+};
