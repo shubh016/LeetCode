@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool dfs(int curr,vector<bool> visit, map<int,vector<int>> &mp){
+        if(visit[curr]){
+            return true;
+        }
+        visit[curr]=true;
+        for(auto i : mp[curr]){
+            bool cycle=dfs(i,visit,mp);
+            if(cycle==true){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        map<int,vector<int>> mp;
+        for(int i=0;i<prerequisites.size();i++){
+            mp[prerequisites[i][0]].push_back(prerequisites[i][1]);
+        }
+        vector<bool> visit(numCourses,false);
+        for(int i=0;i<numCourses;i++){
+            visit[i]=true;
+            for(int j=0;j<mp[i].size();j++){
+                bool complete=dfs(mp[i][j],visit,mp);
+                if(complete==true){
+                    return false;
+                }
+            }    
+            visit[i]=false;
+        }
+        return true;
+    }
+};
