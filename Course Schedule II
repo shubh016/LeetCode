@@ -1,0 +1,69 @@
+class Solution {
+public:
+    bool dfs(int curr,vector<bool> visit, map<int,vector<int>> &mp){
+        if(visit[curr]){
+            return true;
+        }
+        visit[curr]=true;
+        for(auto i : mp[curr]){
+            bool cycle=dfs(i,visit,mp);
+            if(cycle==true){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    void dfs1(stack<int> &s,int curr,vector<bool> &v,map<int,vector<int>> &mp){
+        v[curr]=true;
+        for(auto i : mp[curr]){
+            if(!v[i]){
+                dfs1(s,i,v,mp);
+            }
+        }
+        s.push(curr);
+    }
+    
+    void reverse(vector<int> &v){
+        int i=0;
+        int j=v.size()-1;
+        while(i<j){
+            swap(v[i],v[j]);
+            i++;
+            j--;
+        }
+    }
+    
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        map<int,vector<int>> mp;
+        vector<int> ans;
+        for(int i=0;i<prerequisites.size();i++){
+            mp[prerequisites[i][0]].push_back(prerequisites[i][1]);
+        }
+        vector<bool> visit(numCourses,false);
+        for(int i=0;i<numCourses;i++){
+            visit[i]=true;
+            for(int j=0;j<mp[i].size();j++){
+                bool complete=dfs(mp[i][j],visit,mp);
+                if(complete==true){
+                    return ans;
+                }
+            }    
+            visit[i]=false;
+        }
+        
+        stack<int> s;
+        vector<bool> visit1(numCourses,false);
+        for(int i=0;i<numCourses;i++){
+            if(!visit1[i]){
+                dfs1(s,i,visit1,mp);
+            }
+        }
+        while(!s.empty()){
+            ans.push_back(s.top());
+            s.pop();
+        }
+        reverse(ans);
+        return ans;
+    }
+};
