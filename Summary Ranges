@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<string> summaryRanges(vector<int>& nums) {
+        vector<string> v;
+        int n=nums.size();
+        if(n==0){
+            return v;   
+        }
+        int start=nums[0];
+        for(int end=0;end<n;end++){
+            if(end==n-1 || nums[end]+1 != nums[end+1]){
+                if(start!=nums[end]){
+                    v.push_back(to_string(start)+"->"+to_string(nums[end]));
+                }
+                else{
+                    v.push_back(to_string(start));
+                }
+                if(end!=n-1){
+                    start=nums[end+1];
+                }
+            }
+        }
+        return v;
+    }
+};
