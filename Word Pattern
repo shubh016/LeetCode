@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string s) {
+        vector<string> v;
+        string str="";
+        for(int i=0;i<s.size();i++){
+            if(s[i]==' '){
+                v.push_back(str);
+               // cout<<str<<" ";
+                str="";
+                continue;
+            }
+            str+=s[i];
+        }
+        v.push_back(str);
+        if(pattern.size()!=v.size()){
+            return false;
+        }
+        map<char,string> mp;
+        set<string> S;
+        for(int i=0;i<pattern.size();i++){
+            if(mp.find(pattern[i])!=mp.end()){
+                if(mp[pattern[i]].compare(v[i])!=0){
+                    return false;
+                }
+            }
+            else{
+                if(S.find(v[i])!=S.end()){
+                    return false;
+                }
+                S.insert(v[i]);
+                mp[pattern[i]]=v[i];
+            }
+        }
+        return true;
+    }
+};
