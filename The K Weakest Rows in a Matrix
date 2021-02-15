@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<int> kWeakestRows(vector<vector<int>>& mat, int k) {
+        vector<int> ans;
+        int row=mat.size();
+        int col=mat[0].size();
+        if((row==0 && col==0) || k>row){
+            return ans;
+        }
+        unordered_map<int,vector<int>> mp;
+        for(int i=0;i<row;i++){
+            int count=0;
+            for(int j=0;j<col;j++){
+                if(mat[i][j]==0){
+                    break;
+                }
+                count++;
+            }
+            mp[count].push_back(i);
+        }
+        for(int i=0;i<mp.size();i++){
+                cout<<i;
+                for(int j=0;j<mp[i].size();j++){
+                    cout<<" "<<mp[i][j];
+            }
+            cout<<endl;
+        }
+        //sort(mp.begin(),mp.end());
+        for(int i=0;i<mp.size();i++){
+            if(mp[i].size()>0){
+                for(int j=0;j<mp[i].size();j++){
+                    ans.push_back(mp[i][j]);
+                    cout<<mp[i][j]<<" ";
+                }      
+            }
+        }
+        ans.erase(ans.begin()+k,ans.end());
+        return ans;
+    }
+};
