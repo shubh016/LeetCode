@@ -1,0 +1,37 @@
+class Solution {
+public:
+    void permutation(set<string> &s,string str,string S,int n,int row){
+        if(str.size()==n){
+            s.insert(str);
+            return;
+        }
+        for(int i=row;i<n;i++){
+            if((S[i]>='a' && S[i]<='z') || (S[i]>='A' && S[i]<='Z') || (S[i]>='0' && S[i]<='9')){
+                str+=S[i];
+                permutation(s,str,S,n,i+1);
+                str.pop_back();
+            }
+            if(S[i]>='a' && S[i]<='z'){
+                str+=(S[i]-32);
+                permutation(s,str,S,n,i+1);
+            }
+            else if(S[i]>='A' && S[i]<='Z'){
+                str+=(S[i]+32);
+                permutation(s,str,S,n,i+1);
+            }
+        }
+    }
+    
+    vector<string> letterCasePermutation(string S) {
+        vector<string> ans;
+        int n=S.size();
+        string str="";
+        int row=0;
+        set<string> s;
+        permutation(s,str,S,n,row);
+        for(auto i : s){
+            ans.push_back(i);
+        }
+        return ans;
+    }
+};
