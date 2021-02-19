@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int numberOfArithmeticSlices(vector<int>& A) {
+        int n=A.size();
+        if(n<3){
+            return 0;
+        }
+        int diff=0;
+        int count=0;
+        //set<vector<int>> S;
+        for(int i=0;i<=n-3;i++){
+            vector<int> v;
+            diff=A[i+1]-A[i];
+            v.push_back(A[i]);
+            for(int j=i+1;j<n;j++){
+                if(A[j]-A[j-1]==diff){
+                    v.push_back(A[j]);
+                    if(v.size()>=3){
+                        //S.insert(v);
+                        count++;
+                    }
+                }
+                else{
+                    break;
+                }
+            }
+        }
+        return count;
+    }
+};
